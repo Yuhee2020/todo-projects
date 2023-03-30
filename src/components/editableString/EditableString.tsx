@@ -8,7 +8,7 @@ import s from './EditableString.module.scss'
 type PropsType = {
   value: string
   onChange: (newValue: string) => void
-  checked: boolean
+  checked?: boolean
 }
 
 export const EditableString = memo(({ value, onChange, checked }: PropsType) => {

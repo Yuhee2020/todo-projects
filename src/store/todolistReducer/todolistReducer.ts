@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { TaskType, ThemeType } from './types'
+import {StateType} from "../../hooks";
 
 export const slice = createSlice({
   name: 'todolist',
@@ -39,6 +40,9 @@ export const slice = createSlice({
     changeTheme(state, action: PayloadAction<ThemeType>) {
       state.theme = action.payload
     },
+    setImportedProject(state, action: PayloadAction<any>) {
+      state.tasks= action.payload.tasks
+    },
   },
 })
 
@@ -48,5 +52,6 @@ export const {
   changeTaskStatus,
   changeTaskDescription,
   changeTheme,
+  setImportedProject
 } = slice.actions
 export const todolistReducer = slice.reducer
