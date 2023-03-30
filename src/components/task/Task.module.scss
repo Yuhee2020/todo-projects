@@ -1,0 +1,47 @@
+@import "./src/App";
+
+.card {
+  margin: 7px 0;
+  transition: transform .2s;
+  box-shadow: 0 4px 6px $primary-color;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+}
+
+.taskContainer {
+  display: flex;
+  font-family: 'Roboto', sans-serif;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 45px;
+
+  .leftBox {
+    display: flex;
+    width: 100%;
+    align-items: center;
+
+    .checkbox {
+
+    }
+  }
+
+  .rightBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 98px;
+
+    .date {
+      font-size: 11px;
+      width: 65px;
+    }
+  }
+
+}
+
+.card > div {
+  padding: 5px 10px !important;
+}
