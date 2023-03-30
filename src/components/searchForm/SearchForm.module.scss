@@ -1,0 +1,8 @@
+.formContainer {
+  display: flex;
+  margin: 10px;
+  @media (max-width: 400px){
+    width: 170px;
+
+  }
+}

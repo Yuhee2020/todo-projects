@@ -5,4 +5,6 @@ export type TaskType = {
   dateOfCreation: string
 }
 
+export type FilterType="all" | "active" | "completed"
+
 export type ThemeType = 'light' | 'dark'

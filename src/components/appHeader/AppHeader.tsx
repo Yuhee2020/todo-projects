@@ -9,6 +9,7 @@ import { changeTheme } from '../../store/todolistReducer/todolistReducer'
 import s from './AppHeader.module.scss'
 import { Moon } from './icons/Moon'
 import { Sun } from './icons/Sun'
+import {SearchForm} from "../searchForm/SearchForm";
 
 export const AppHeader = () => {
   const dispatch = useAppDispatch()
@@ -21,7 +22,7 @@ export const AppHeader = () => {
 
   return (
     <div className={s.headerContainer}>
-      <div className={s.title}>Todolist</div>
+        <SearchForm/>
       <div className={s.buttonsGroup}>
         <Switch
           onChange={handleSwitchChange}

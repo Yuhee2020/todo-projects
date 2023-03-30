@@ -7,44 +7,49 @@ import {selectTasks} from '../store/selectors'
 import {ExportOutlined} from '@ant-design/icons';
 
 import s from './Todolist.module.scss'
-import {Button} from "antd";
+import {Button, Typography} from "antd";
 import {saveData} from "../utils";
 
-import {setImportedProject} from "../store/todolistReducer/todolistReducer";
+import {
+    changeProjectName,
+    setImportedProject
+} from "../store/todolistReducer/todolistReducer";
 import {FileUploader} from "../components/fileUploader/FileUploader";
 import {EditableString} from "../components/editableString/EditableString";
+import {FilterButtons} from "../components/filterButtons/FilterButtons";
+import {ExportImportForm} from "../components/exportImportForm/ExportImportForm";
 
 const Todolist = () => {
-    const dispatch=useAppDispatch()
+    const dispatch = useAppDispatch()
     const tasks = useAppSelector(selectTasks)
-    const state = useAppSelector(state => state)
-    const handleExportProjectClick=()=>{
-        saveData(state)
+    const searchText = useAppSelector(state => state.todolist.searchText)
+    const filter = useAppSelector(state => state.todolist.filter)
+    let filteredTasks = searchText ? tasks.filter(el => el.description.includes(searchText)) : tasks
+    if (filter === "active") {
+        filteredTasks = filteredTasks.filter(el => !el.status)
     }
-    const handleImportProjectClick=(data:StateType)=>{
-        console.log(data)
-        dispatch(setImportedProject(data.todolist))
+    if (filter === "completed") {
+        filteredTasks = filteredTasks.filter(el => el.status)
+    }
+    const projectName = useAppSelector(state => state.todolist.projectName)
+
+    const handleProjectNameChange = (projectName: string) => {
+        dispatch(changeProjectName(projectName))
     }
 
     return (
         <div className={s.todolistContainer}>
-            <h1><EditableString value={"Todolist"} onChange={() => {
-            }}/></h1>
-            <div>
-                <Button icon={<ExportOutlined/>} onClick={handleExportProjectClick}>export
-                    project</Button>
-               <FileUploader onFileLoad={handleImportProjectClick}/>
-            </div>
+            <ExportImportForm/>
+            <Typography className={s.projectName}>
+                <EditableString value={projectName}
+                                onChange={handleProjectNameChange}/>
+            </Typography>
             <AddTaskForm/>
+            {!!tasks.length && <FilterButtons/>}
             <div className={s.tasksContainer}>
-                {tasks.map(task => (
+                {filteredTasks.map(task => (
                     <Task key={task.id} task={task}/>
                 ))}
-            </div>
-            <div>
-                <Button>ALL</Button>
-                <Button>ACTIVE</Button>
-                <Button>COMPLETED</Button>
             </div>
         </div>
     )

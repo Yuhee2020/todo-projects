@@ -26,8 +26,10 @@ export const FileUploader = ({onFileLoad}: PropsType) => {
     };
     return (
         <div>
-            <Button icon={<ImportOutlined/>} onClick={selectFileHandler}>import
-                project</Button>
+            <Button
+                size="small" type="text"
+                icon={<ImportOutlined/>} onClick={selectFileHandler}>import
+                </Button>
             <input
                 style={{display: 'none'}}
                 ref={inputRef}

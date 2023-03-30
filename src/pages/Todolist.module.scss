@@ -5,11 +5,22 @@
   align-items: center;
   width: 600px;
   padding: 5px;
-  @media (max-width: 650px){
+  @media (max-width: 650px) {
     width: 98%;
   }
 
+  .projectName {
+    font-size: 45px;
+    font-weight: lighter;
+    min-height: 50px;
+    margin: 0 auto 10px auto;
+    letter-spacing: 3px;
+    font-family: 'Roboto', sans-serif;
+    @media (max-width: 320px) {
+      font-size: 30px;
+    }
 
+  }
   .tasksContainer {
     width: 100%;
     display: flex;

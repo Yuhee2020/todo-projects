@@ -1,7 +1,6 @@
 @import "./src/App";
 
 .headerContainer {
-  margin-bottom: 10px;
   width: 100%;
   background-color: $primary-color;
   display: flex;
@@ -24,7 +23,7 @@
   .buttonsGroup {
     position: absolute;
     right: 40px;
-    @media (max-width: 400px){
+    @media (max-width: 450px){
       right: 2px;
     }
   }

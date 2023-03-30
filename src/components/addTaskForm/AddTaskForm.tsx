@@ -35,7 +35,7 @@ export const AddTaskForm = memo(() => {
   return (
     <div className={s.formContainer}>
       <Input
-        placeholder="Enter task description..."
+        placeholder="Enter task title..."
         size="large"
         onKeyPress={handleEnterPress}
         onChange={handleInputChange}
