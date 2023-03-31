@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 
 import {FilterType, TaskType, ThemeType} from './types'
+import {recursiveAddSubtask, recursiveUpdateSubtask, removeSubtask} from "../../utils";
 
 export const slice = createSlice({
     name: 'todolist',
@@ -16,28 +17,24 @@ export const slice = createSlice({
         addTask(state, action: PayloadAction<TaskType>) {
             state.tasks.unshift(action.payload)
         },
-        deleteTask(state, action: PayloadAction<string>) {
-            const index = state.tasks.findIndex(task => task.id === action.payload)
+        deleteTask(state, action: PayloadAction<TaskType>) {
+            const {parentId,id,}=action.payload
+            if(!parentId){
+            const index = state.tasks.findIndex(task => task.id === id)
             if (index > -1) {
                 state.tasks.splice(index, 1)
-            }
+            }}
+            else state.tasks=removeSubtask(parentId,id, state.tasks)
         },
-        changeTaskStatus(state, action: PayloadAction<string>) {
-            const index = state.tasks.findIndex(task => task.id === action.payload)
-
-            if (index > -1) {
-                state.tasks[index].status = !state.tasks[index].status
-            }
-        },
-        changeTaskDescription(
+        changeTask(
             state,
-            action: PayloadAction<{ id: string; description: string }>,
+            action: PayloadAction<TaskType>,
         ) {
             const index = state.tasks.findIndex(task => task.id === action.payload.id)
-
             if (index > -1) {
-                state.tasks[index].description = action.payload.description
-            }
+                state.tasks[index] = action.payload
+            }else
+            state.tasks=recursiveUpdateSubtask(action.payload, state.tasks)
         },
         changeTheme(state, action: PayloadAction<ThemeType>) {
             state.theme = action.payload
@@ -46,10 +43,7 @@ export const slice = createSlice({
             state.projectName = action.payload
         },
         setImportedProject(state, action: PayloadAction<any>) {
-            state.tasks = action.payload.tasks
-            state.filter = action.payload.filter
-            state.theme = action.payload.theme
-            state.projectName = action.payload.projectName
+            state=action.payload
         },
         setFilter(state, action: PayloadAction<FilterType>) {
             state.filter = action.payload
@@ -57,19 +51,23 @@ export const slice = createSlice({
         setSearchText(state, action: PayloadAction<string>) {
             state.searchText = action.payload
         },
+        addSubTask(state, action: PayloadAction<{subTask:TaskType, parentId:string}>) {
+            state.tasks=recursiveAddSubtask(action.payload.parentId,action.payload.subTask, state.tasks)
+        },
+
     },
 })
 
 export const {
     addTask,
     deleteTask,
-    changeTaskStatus,
-    changeTaskDescription,
+    changeTask,
     changeTheme,
     setImportedProject,
     changeProjectName,
     setFilter,
     setSearchText,
+    addSubTask
 } = slice.actions
 export const todolistReducer = slice.reducer
 

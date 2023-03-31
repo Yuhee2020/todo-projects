@@ -1,61 +1,80 @@
-import React, { memo } from 'react'
+import React, {memo} from 'react'
 
-import { DeleteOutlined } from '@ant-design/icons'
-import { Button, Card, Checkbox } from 'antd'
+import {DeleteOutlined} from '@ant-design/icons'
+import {Button, Card, Checkbox} from 'antd'
 
-import { useAppDispatch } from '../../hooks'
+import {useAppDispatch} from '../../hooks'
 import {
-  changeTaskDescription,
-  changeTaskStatus,
-  deleteTask,
+    addSubTask,
+    changeTask,
+    deleteTask,
 } from '../../store/todolistReducer/todolistReducer'
-import { TaskType } from '../../store/todolistReducer/types'
-import { EditableString } from '../editableString/EditableString'
+import {TaskType} from '../../store/todolistReducer/types'
+import {EditableString} from '../editableString/EditableString'
 
 import s from './Task.module.scss'
+import {v1} from "uuid";
+import dayjs from "dayjs";
+import {DATE_FORMAT} from "../../constants";
 
 type PropsType = {
-  task: TaskType
+    task: TaskType
 }
 
-export const Task = memo(({ task }: PropsType) => {
-  const dispatch = useAppDispatch()
+export const Task = memo(({task}: PropsType) => {
+    const dispatch = useAppDispatch()
 
-  const handleDeleteClick = () => {
-    dispatch(deleteTask(task.id))
-  }
-  const handleCheckboxClick = () => {
-    dispatch(changeTaskStatus(task.id))
-  }
-  const handleDescriptionsChange = (description: string) => {
-    dispatch(changeTaskDescription({ id: task.id, description }))
-  }
+    const handleDeleteClick = () => {
+        dispatch(deleteTask(task))
+    }
+    const handleCheckboxClick = () => {
+        dispatch(changeTask({...task, status:!task.status}))
+    }
+    const handleDescriptionsChange = (description: string) => {
+        dispatch(changeTask({...task, description}))
+    }
+    const handleAddTaskClick = () => {
+        const newTask = {
+            description: "New task",
+            id: v1(),
+            dateOfCreation: dayjs().format(DATE_FORMAT),
+            status: false,
+            parentId: task.id,
+            subtasks: []
+        }
+        dispatch(addSubTask({subTask:newTask, parentId:task.id}))
 
-  return (
-    <Card className={s.card}>
-      <div className={s.taskContainer}>
-        <div className={s.leftBox}>
-          <Checkbox
-            className={s.checkbox}
-            checked={task.status}
-            onClick={handleCheckboxClick}
-          />
-          <EditableString
-            checked={task.status}
-            value={task.description}
-            onChange={handleDescriptionsChange}
-          />
-        </div>
-        <div className={s.rightBox}>
-          <div className={s.date}>{task.dateOfCreation}</div>
-          <Button
-            type="text"
-            onClick={handleDeleteClick}
-            icon={<DeleteOutlined />}
-            shape="circle"
-          />
-        </div>
-      </div>
-    </Card>
-  )
+    }
+
+    return (
+        <Card className={s.card}>
+            <div className={s.taskContainer}>
+                <div className={s.leftBox}>
+                    <Checkbox
+                        className={s.checkbox}
+                        checked={task.status}
+                        onClick={handleCheckboxClick}
+                    />
+                    <EditableString
+                        checked={task.status}
+                        value={task.description}
+                        onChange={handleDescriptionsChange}
+                    />
+                </div>
+                <Button onClick={handleAddTaskClick}>+</Button>
+                <div className={s.rightBox}>
+                    <div className={s.date}>{task.dateOfCreation}</div>
+                    <Button
+                        type="text"
+                        onClick={handleDeleteClick}
+                        icon={<DeleteOutlined/>}
+                        shape="circle"
+                    />
+                </div>
+            </div>
+            {task.subtasks && task.subtasks.map((subtask) => (
+                <Task task={subtask} key={subtask.id}/>
+            ))}
+        </Card>
+    )
 })

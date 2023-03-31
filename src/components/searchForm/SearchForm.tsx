@@ -3,7 +3,7 @@ import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react'
 import {SearchOutlined} from '@ant-design/icons'
 import {Button, Input} from 'antd'
 
-import {useAppDispatch} from '../../hooks'
+import {useAppDispatch, useAppSelector} from '../../hooks'
 
 
 import s from './SearchForm.module.scss'
@@ -11,8 +11,8 @@ import {setSearchText} from "../../store/todolistReducer/todolistReducer";
 
 export const SearchForm = memo(() => {
     const dispatch = useAppDispatch()
-
-    const [text, setText] = useState('')
+    const searchText = useAppSelector(state => state.todolist.searchText)
+    const [text, setText] = useState(searchText)
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setText(e.currentTarget.value)
     }
@@ -20,7 +20,7 @@ export const SearchForm = memo(() => {
         dispatch(setSearchText(text))
     }
     const handleEnterPress = (e: KeyboardEvent<HTMLInputElement>) => {
-        e.key === 'Enter' && text && handleButtonClick()
+        e.key === 'Enter' && handleButtonClick()
     }
 
     return (

@@ -2,19 +2,13 @@ import React from 'react'
 
 import {AddTaskForm} from '../components/addTaskForm/AddTaskForm'
 import {Task} from '../components/task/Task'
-import {StateType, useAppDispatch, useAppSelector} from '../hooks'
+import {useAppDispatch, useAppSelector} from '../hooks'
 import {selectTasks} from '../store/selectors'
-import {ExportOutlined} from '@ant-design/icons';
 
 import s from './Todolist.module.scss'
-import {Button, Typography} from "antd";
-import {saveData} from "../utils";
+import {Typography} from "antd";
 
-import {
-    changeProjectName,
-    setImportedProject
-} from "../store/todolistReducer/todolistReducer";
-import {FileUploader} from "../components/fileUploader/FileUploader";
+import {changeProjectName} from "../store/todolistReducer/todolistReducer";
 import {EditableString} from "../components/editableString/EditableString";
 import {FilterButtons} from "../components/filterButtons/FilterButtons";
 import {ExportImportForm} from "../components/exportImportForm/ExportImportForm";
