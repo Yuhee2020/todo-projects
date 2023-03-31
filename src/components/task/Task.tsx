@@ -1,6 +1,6 @@
 import React, {memo} from 'react'
 
-import {DeleteOutlined,FolderAddOutlined} from '@ant-design/icons'
+import {DeleteOutlined, FolderAddOutlined} from '@ant-design/icons'
 import {Button, Card, Checkbox, Tooltip} from 'antd'
 
 import {useAppDispatch} from '../../hooks'
@@ -45,40 +45,44 @@ export const Task = memo(({task}: PropsType) => {
         dispatch(addSubTask({subTask:newTask, parentId:task.id}))
 
     }
-
     return (
-        <Card className={s.card}>
-            <div className={s.taskContainer}>
-                <div className={s.leftBox}>
-                    <Checkbox
-                        className={s.checkbox}
-                        checked={task.status}
-                        onClick={handleCheckboxClick}
-                    />
-                    <EditableString
-                        checked={task.status}
-                        value={task.description}
-                        onChange={handleDescriptionsChange}
-                    />
-                </div>
-
-
-                <div className={s.rightBox}>
-                    <Tooltip  title={"Add subtask"} >
-                        <Button shape="circle" type="text" icon={<FolderAddOutlined/>} onClick={handleAddTaskClick}/>
-                    </Tooltip>
-                    <div className={s.date}>{task.dateOfCreation}</div>
-                    <Button
-                        type="text"
-                        onClick={handleDeleteClick}
-                        icon={<DeleteOutlined/>}
-                        shape="circle"
-                    />
-                </div>
-            </div>
-            {task.subtasks && task.subtasks.map((subtask) => (
-                <Task task={subtask} key={subtask.id}/>
-            ))}
-        </Card>
+                <Card
+                    className={s.card}
+                >
+                    <div className={s.taskContainer}>
+                        <div className={s.leftBox}>
+                            <Checkbox
+                                className={s.checkbox}
+                                checked={task.status}
+                                onClick={handleCheckboxClick}
+                            />
+                            <EditableString
+                                checked={task.status}
+                                value={task.description}
+                                onChange={handleDescriptionsChange}
+                            />
+                        </div>
+                        <div className={s.rightBox}>
+                            <Tooltip title={"Add subtask"}>
+                                <Button
+                                    shape="circle"
+                                    type="text"
+                                    icon={<FolderAddOutlined/>}
+                                    onClick={handleAddTaskClick}
+                                />
+                            </Tooltip>
+                            <div className={s.date}>{task.dateOfCreation}</div>
+                            <Button
+                                type="text"
+                                onClick={handleDeleteClick}
+                                icon={<DeleteOutlined/>}
+                                shape="circle"
+                            />
+                        </div>
+                    </div>
+                    {task.subtasks && task.subtasks.map((subtask) => (
+                        <Task task={subtask} key={subtask.id}/>
+                    ))}
+                </Card>
     )
 })

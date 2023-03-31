@@ -10,21 +10,20 @@ export const slice = createSlice({
         tasks: [] as TaskType[],
         filter: "all" as FilterType,
         theme: 'light',
-        filteredTasks: [] as TaskType[],
-        searchText:""
+        searchText: ""
     },
     reducers: {
         addTask(state, action: PayloadAction<TaskType>) {
             state.tasks.unshift(action.payload)
         },
         deleteTask(state, action: PayloadAction<TaskType>) {
-            const {parentId,id,}=action.payload
-            if(!parentId){
-            const index = state.tasks.findIndex(task => task.id === id)
-            if (index > -1) {
-                state.tasks.splice(index, 1)
-            }}
-            else state.tasks=removeSubtask(parentId,id, state.tasks)
+            const {parentId, id,} = action.payload
+            if (!parentId) {
+                const index = state.tasks.findIndex(task => task.id === id)
+                if (index > -1) {
+                    state.tasks.splice(index, 1)
+                }
+            } else state.tasks = removeSubtask(parentId, id, state.tasks)
         },
         changeTask(
             state,
@@ -33,8 +32,8 @@ export const slice = createSlice({
             const index = state.tasks.findIndex(task => task.id === action.payload.id)
             if (index > -1) {
                 state.tasks[index] = action.payload
-            }else
-            state.tasks=recursiveUpdateSubtask(action.payload, state.tasks)
+            } else
+                state.tasks = recursiveUpdateSubtask(action.payload, state.tasks)
         },
         changeTheme(state, action: PayloadAction<ThemeType>) {
             state.theme = action.payload
@@ -43,7 +42,8 @@ export const slice = createSlice({
             state.projectName = action.payload
         },
         setImportedProject(state, action: PayloadAction<any>) {
-            state=action.payload
+            state.tasks = action.payload.tasks
+            state.projectName = action.payload.projectName
         },
         setFilter(state, action: PayloadAction<FilterType>) {
             state.filter = action.payload
@@ -51,8 +51,13 @@ export const slice = createSlice({
         setSearchText(state, action: PayloadAction<string>) {
             state.searchText = action.payload
         },
-        addSubTask(state, action: PayloadAction<{subTask:TaskType, parentId:string}>) {
-            state.tasks=recursiveAddSubtask(action.payload.parentId,action.payload.subTask, state.tasks)
+        addSubTask(state, action: PayloadAction<{ subTask: TaskType, parentId: string }>) {
+            state.tasks = recursiveAddSubtask(action.payload.parentId, action.payload.subTask, state.tasks)
+        },
+        changeTaskPosition(state, action: PayloadAction<{ id: string, destinationIndex: number, sourceIndex: number }>) {
+            const {destinationIndex, sourceIndex} = action.payload
+            const [task] = state.tasks.splice(sourceIndex, 1)
+            state.tasks.splice(destinationIndex,0, task)
         },
 
     },
@@ -67,7 +72,8 @@ export const {
     changeProjectName,
     setFilter,
     setSearchText,
-    addSubTask
+    addSubTask,
+    changeTaskPosition
 } = slice.actions
 export const todolistReducer = slice.reducer
 

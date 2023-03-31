@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux'
 
-export const localStorageMiddleware =
+export const sessionStorageMiddleware =
   (store: { getState: () => any }) =>
   (next: (action: AnyAction) => AnyAction) =>
   (action: AnyAction) => {

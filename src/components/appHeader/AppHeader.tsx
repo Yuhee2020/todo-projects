@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 
 import { Switch } from 'antd'
 
@@ -11,7 +11,7 @@ import { Moon } from './icons/Moon'
 import { Sun } from './icons/Sun'
 import {SearchForm} from "../searchForm/SearchForm";
 
-export const AppHeader = () => {
+export const AppHeader = memo(() => {
   const dispatch = useAppDispatch()
 
   const theme = useAppSelector(selectTheme)
@@ -34,4 +34,4 @@ export const AppHeader = () => {
       </div>
     </div>
   )
-}
+})

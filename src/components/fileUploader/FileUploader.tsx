@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useRef, useState} from 'react';
+import React, {ChangeEvent, memo, useRef} from 'react';
 import {StateType} from "../../hooks";
 import {Button} from "antd";
 import {ImportOutlined} from "@ant-design/icons";
@@ -7,7 +7,7 @@ type PropsType = {
     onFileLoad: (project: StateType) => void
 }
 
-export const FileUploader = ({onFileLoad}: PropsType) => {
+export const FileUploader =memo( ({onFileLoad}: PropsType) => {
     const inputRef = useRef<HTMLInputElement>(null)
     const selectFileHandler = () => {
         inputRef && inputRef.current?.click();
@@ -38,7 +38,7 @@ export const FileUploader = ({onFileLoad}: PropsType) => {
             />
         </div>
     )
-}
+})
 
 
 
