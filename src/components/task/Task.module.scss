@@ -11,16 +11,16 @@
 }
 
 .taskContainer {
+  width: 100%;
   display: flex;
-  font-family: 'Roboto', sans-serif;
-  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  flex-wrap: wrap;
   min-height: 45px;
 
   .leftBox {
     display: flex;
-    width: 100%;
+    max-width: 100%;
     align-items: center;
 
     .checkbox {
@@ -32,7 +32,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 98px;
+    width: 130px;
 
     .date {
       font-size: 11px;

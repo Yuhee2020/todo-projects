@@ -1,7 +1,7 @@
 import React, {memo} from 'react'
 
-import {DeleteOutlined} from '@ant-design/icons'
-import {Button, Card, Checkbox} from 'antd'
+import {DeleteOutlined,FolderAddOutlined} from '@ant-design/icons'
+import {Button, Card, Checkbox, Tooltip} from 'antd'
 
 import {useAppDispatch} from '../../hooks'
 import {
@@ -61,8 +61,12 @@ export const Task = memo(({task}: PropsType) => {
                         onChange={handleDescriptionsChange}
                     />
                 </div>
-                <Button onClick={handleAddTaskClick}>+</Button>
+
+
                 <div className={s.rightBox}>
+                    <Tooltip  title={"Add subtask"} >
+                        <Button shape="circle" type="text" icon={<FolderAddOutlined/>} onClick={handleAddTaskClick}/>
+                    </Tooltip>
                     <div className={s.date}>{task.dateOfCreation}</div>
                     <Button
                         type="text"
