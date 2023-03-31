@@ -1,14 +1,18 @@
-# Todolist. Test work
+# Todo-projects
 
-[see project](https://todo-testwork.vercel.app)
+[see project](https://todo-projects.vercel.app/)
 
 ### App for managing your tasks
 
-- Your data is stored in local storage
+- You can export and import your projects
 - You can add tasks
+- You can add subtasks
 - You can delete tacks
 - You can edit tasks
+- You can edit project name
 - You can mark completed tasks
+- Search and filtration tasks
+- Drag and drops tasks
 - App support two visual themes - dark and light.
 - Adaptive for mobile and tablets
 
@@ -23,6 +27,7 @@
 - SASS
 - Dayjs
 - uuid
+- react-beautiful-dnd
 
 
 #### For readable code used

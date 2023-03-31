@@ -3,10 +3,10 @@ export type TaskType = {
   description: string
   status: boolean
   dateOfCreation: string
-  parentId:string | null
-  subtasks:TaskType[]
+  parentId: string | null
+  subtasks: TaskType[]
 }
 
-export type FilterType="all" | "active" | "completed"
+export type FilterType = 'all' | 'active' | 'completed'
 
 export type ThemeType = 'light' | 'dark'

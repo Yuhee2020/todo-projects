@@ -1,11 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 
-
+import { sessionStorageMiddleware } from '../middlewares/sessionStorageMiddleware'
 import { loadState } from '../utils'
 
 import { todolistReducer } from './todolistReducer/todolistReducer'
-import {sessionStorageMiddleware} from "../middlewares/sessionStorageMiddleware";
 
 export const rootReducer = combineReducers({
   todolist: todolistReducer,

@@ -1,15 +1,15 @@
-import React, {memo} from 'react'
+import React, { memo } from 'react'
 
 import { Switch } from 'antd'
 
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { selectTheme } from '../../store/selectors'
 import { changeTheme } from '../../store/todolistReducer/todolistReducer'
+import { SearchForm } from '../searchForm/SearchForm'
 
 import s from './AppHeader.module.scss'
 import { Moon } from './icons/Moon'
 import { Sun } from './icons/Sun'
-import {SearchForm} from "../searchForm/SearchForm";
 
 export const AppHeader = memo(() => {
   const dispatch = useAppDispatch()
@@ -22,7 +22,7 @@ export const AppHeader = memo(() => {
 
   return (
     <div className={s.headerContainer}>
-        <SearchForm/>
+      <SearchForm />
       <div className={s.buttonsGroup}>
         <Switch
           onChange={handleSwitchChange}
